@@ -94,6 +94,9 @@ const Home = () => {
             <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
               ApniClass
             </Link>
+            <Link to="/upload" style={{ textDecoration: "none", color: "#fff" }}>
+              Upload
+            </Link>
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
