@@ -114,7 +114,7 @@ const Upload = () => {
     );
   };
   const postFile = async (downloadURL) => {
-    await axios.post("/api/", {
+    await axios.post("https://apniclass.herokuapp.com/api/", {
       subject: subject,
       stype: stype,
       fileName: file_name,

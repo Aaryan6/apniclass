@@ -70,7 +70,7 @@ const Home = () => {
   // get files
   useEffect(() => {
     const getfiles = async () => {
-      const res = await axios.get("/api/");
+      const res = await axios.get("https://apniclass.herokuapp.com/api/");
       setFiles(res.data);
     };
     getfiles();
