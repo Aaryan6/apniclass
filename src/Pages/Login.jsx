@@ -80,7 +80,7 @@ const Login = () => {
         password: password.current.value,
       }
       try {
-        const res = await axios.post("http://localhost:5000/api/users/login", user)
+        const res = await axios.post("https://apniclass.herokuapp.com/api/users/login", user)
         localStorage.setItem("student", JSON.stringify(res.data))
         navigate("/")
         window.location.reload()

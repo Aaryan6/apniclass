@@ -85,7 +85,7 @@ const Register = () => {
         password: password.current.value,
       }
       try {
-        await axios.post("http://localhost:5000/api/users/register", user)
+        await axios.post("https://apniclass.herokuapp.com/api/users/register", user)
         navigate("/login")
       } catch (error) {
         console.log(error)
