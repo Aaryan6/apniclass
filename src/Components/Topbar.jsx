@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Logout } from "@mui/icons-material";
 
 // navbar
 const Navbar = styled.div`
@@ -29,6 +30,11 @@ const Logo = styled.span`
   font-size: 20px;
 `;
 const Username = styled.span`
+margin-right: 10px;
+`;
+const Right = styled.div`
+display: flex;
+align-items: center;
 `;
 
 const Topbar = ({user}) => {
@@ -36,6 +42,12 @@ const Topbar = ({user}) => {
   window.onscroll = () => {
     setOffset(window.pageYOffset);
   };
+
+  // logout
+  const handleLogout = () =>{
+    localStorage.removeItem("student")
+    window.location.reload();
+  }
     return (
             <Navbar style={{
         background: offset >= 300 ? "#fff" : "none",
@@ -50,8 +62,9 @@ const Topbar = ({user}) => {
               <b>Apni</b>Class
             </Logo>
           </Link>
+          <Right>
           {user.isAdmin && (
-            <Link to="/upload" style={{ textDecoration: "none", color: offset >= 300 ? "#000" : "#fff"}}>
+            <Link to="/upload" style={{ textDecoration: "none",marginRight: "5px" , color: offset >= 300 ? "#000" : "#fff"}}>
               <Upload>UPLOAD</Upload>
             </Link>
           )}
@@ -61,6 +74,8 @@ const Topbar = ({user}) => {
               {user.username}
             </span>
           </Username>
+          <Logout onClick={handleLogout} style={{cursor: "pointer", color: offset >= 300 ? "#000" : "#fff"}}/>
+          </Right>
         </Wrapper>
       </Navbar>
     )

@@ -109,6 +109,7 @@ const Landing = () => {
               <MenuItem value="mechanical">Mechanical</MenuItem>
               <MenuItem value="computer">Computer</MenuItem>
               <MenuItem value="maths">Maths</MenuItem>
+              <MenuItem value="language">Language Lab</MenuItem>
             </Select>
           </FormControl>
           <FormControl

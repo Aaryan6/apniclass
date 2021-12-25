@@ -45,7 +45,7 @@ const CardBox = ({ file }) => {
       <a
         href={file.fileLink}
         style={{ textDecoration: "none", color: "inherit" }}
-        download
+        
       >
         <Image></Image>
       </a>

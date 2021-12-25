@@ -5,6 +5,11 @@ import {
   Toolbar,
   Typography,
   LinearProgress,
+  Alert,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -32,12 +37,6 @@ const Form = styled.form`
 const Category = styled.input`
   margin: 10px 0;
   padding: 10px;
-  font-size: 17px;
-`;
-const Type = styled.input`
-  margin: 10px 0;
-  padding: 10px;
-  width: 300px;
   font-size: 17px;
 `;
 const File = styled.input`
@@ -69,6 +68,7 @@ const Upload = ({user}) => {
   const [file, setFile] = useState(null);
   const [progressNo, setProgressNo] = useState(0);
   const navigate = useNavigate()
+  const [alertMess, setAlertMess] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,6 +101,7 @@ const Upload = ({user}) => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           // console.log("File available at", downloadURL);
           postFile(downloadURL);
+          setAlertMess("File uploaded successfully!");
         });
       }
     );
@@ -112,6 +113,7 @@ const Upload = ({user}) => {
       fileName: file_name,
       fileLink: downloadURL,
     });
+
     navigate("/")
   };
   return (
@@ -144,21 +146,61 @@ const Upload = ({user}) => {
             onChange={(e) => setFile_name(e.target.value)}
           />
           <Label>Subject</Label>
-          <Category
-            type="text"
-            placeholder="Subject"
-            onChange={(e) => setSubject(e.target.value)}
-          />
-          <Label>Type</Label>
-          <Type
-            type="text"
-            placeholder="Category"
-            onChange={(e) => setStype(e.target.value)}
-          />
+          <FormControl
+            style={{
+              backgroundColor: "#fff",
+              width: "130px",
+              marginRight: "20px",
+            }}
+          >
+            <InputLabel id="demo-simple-select-label">All</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={subject}
+              label="Age"
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="physics">Physics</MenuItem>
+              <MenuItem value="civil">Civil</MenuItem>
+              <MenuItem value="mechanical">Mechanical</MenuItem>
+              <MenuItem value="computer">Computer</MenuItem>
+              <MenuItem value="maths">Maths</MenuItem>
+              <MenuItem value="language">Language Lab</MenuItem>
+            </Select>
+          </FormControl>
+          <Label>Subject</Label>
+          <FormControl
+            style={{
+              backgroundColor: "#fff",
+              width: "130px",
+              marginRight: "20px",
+            }}
+          >
+            <InputLabel id="demo-simple-select-label">All</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={stype}
+              label="Age"
+              onChange={(e) => setStype(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="notes">Notes</MenuItem>
+              <MenuItem value="assignment">Assignment</MenuItem>
+              <MenuItem value="practical">Practical</MenuItem>
+            </Select>
+          </FormControl>
           <Label>File</Label>
           <File type="file" onChange={(e) => setFile(e.target.files[0])} />
           <Submit onClick={handleSubmit}>Upload</Submit>
           <LinearProgress variant="determinate" value={progressNo} />
+          {alertMess && (
+        <Alert severity="success" style={{ marginTop: "10px" }}>
+          {alertMess}
+        </Alert>
+      )}
         </Form>
       </Container>
     </>

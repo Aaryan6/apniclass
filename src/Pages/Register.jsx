@@ -1,6 +1,7 @@
 // import axios from "axios";
 // import { useRef } from "react";
 // import { useNavigate } from "react-router";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Alert } from "@mui/material";
 import axios from "axios";
 import { useRef, useState } from "react";
@@ -29,6 +30,7 @@ const Form = styled.form`
   flex-direction: column;
   padding: 20px;
   width: 100%;
+  position: relative;
   @media screen and (max-width: 400px) {
     width: 90%;
   }
@@ -72,47 +74,102 @@ const Button = styled.span`
 `;
 
 const Register = () => {
-  const navigate = useNavigate()
-  const username = useRef()
-  const password = useRef()
-  const cpassword = useRef()
-  const [alertMess, setAlertMess] = useState(null)
-  const handleSubmit = async(e) =>{
-      e.preventDefault();
-      if(password.current.value===cpassword.current.value){
+  const navigate = useNavigate();
+  const username = useRef();
+  const password = useRef();
+  const cpassword = useRef();
+  const [alertMess, setAlertMess] = useState(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password.current.value === cpassword.current.value) {
       const user = {
         username: username.current.value,
         password: password.current.value,
-      }
+      };
       try {
-        await axios.post("https://apniclass.herokuapp.com/api/users/register", user)
-        navigate("/login")
+        const res = await axios.post(
+          "https://apniclass.herokuapp.com/api/users/register",
+          user
+        );
+        localStorage.setItem("student", JSON.stringify(res.data));
+        navigate("/");
+        window.location.reload();
       } catch (error) {
-        console.log(error)
+        setAlertMess("Something went is wrong!");
       }
-    }else{
-      setAlertMess("Password dont't match!")
+    } else {
+      setAlertMess("Password dont't match!");
     }
-  }
+  };
+
+  // password hide and show
+  const [ptype, setPtype] = useState("password");
+  const [isShow, setIsShow] = useState(false);
+  const handleVis = () => {
+    if (ptype === "password") {
+      setPtype("text");
+      setIsShow(true);
+    } else {
+      setPtype("password");
+      setIsShow(false);
+    }
+  };
+
   return (
     <Container>
-      <Logo><b>Apni</b>class</Logo>
+      <Logo>
+        <b>Apni</b>class
+      </Logo>
       <Form onSubmit={handleSubmit}>
-        <Username type="text" placeholder="Username" ref={username}/>
+        <Username type="text" placeholder="Username" ref={username} required/>
         <Password
-          type="password"
+          type={ptype}
           placeholder="Password (at least 6 character)"
           ref={password}
+          required
         />
-        <CPassword type="password" placeholder="Confirm Password" ref={cpassword}/>
+        {isShow ? (
+          <Visibility
+            onClick={handleVis}
+            style={{
+              position: "absolute",
+              right: "30px",
+              top: "100px",
+              cursor: "pointer",
+              color: "rgba(0,0,0,0.4)",
+            }}
+          />
+        ) : (
+          <VisibilityOff
+            onClick={handleVis}
+            style={{
+              position: "absolute",
+              right: "30px",
+              top: "100px",
+              cursor: "pointer",
+              color: "rgba(0,0,0,0.4)",
+            }}
+          />
+        )}
+        <CPassword
+          type={ptype}
+          placeholder="Confirm Password"
+          ref={cpassword}
+          required
+        />
         <Submit type="submit">Create Account</Submit>
         <Option>
-          Already have an account? <Link to="/login" style={{textDecoration: "none"}}><Button>Sign in</Button></Link>
+          Already have an account?{" "}
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <Button>Sign in</Button>
+          </Link>
         </Option>
+        {alertMess && (
+        <Alert severity="warning" style={{ marginTop: "10px" }}>
+          {alertMess}
+        </Alert>
+      )}
       </Form>
-      {alertMess &&
-      <Alert severity="warning" style={{marginTop: "10px"}}>{alertMess}</Alert>
-}
     </Container>
   );
 };

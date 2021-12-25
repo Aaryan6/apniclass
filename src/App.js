@@ -16,8 +16,8 @@ function App() {
       <Routes>
       <Route exact path="/" element={user? <Home user={user}/> : <Register/>}/>
       <Route exact path="/upload" element={user? <Upload user={user}/> : <Register/>}/>
-      <Route exact path="/register" element={<Register/>}/>
-      <Route exact path="/login" element={<Login/>}/>
+      <Route exact path="/register" element={user? <Home user={user}/> : <Register/>}/>
+      <Route exact path="/login" element={user? <Home user={user}/> : <Login/>}/>
       </Routes>
     </Router>
   );
