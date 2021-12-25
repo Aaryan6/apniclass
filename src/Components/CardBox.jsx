@@ -57,7 +57,7 @@ const CardBox = ({ file }) => {
           href={file.fileLink}
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <Button>Open</Button>
+          <Button>Download</Button>
         </a>
       </Footer>
     </Card>
