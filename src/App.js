@@ -6,13 +6,18 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
 
 function App() {
+  const user = JSON.parse(localStorage.getItem("student"));
   return (
     <Router>
       <Routes>
-      <Route exact path="/" element={<Home/>}/>
-      <Route exact path="/upload" element={<Upload/>}/>
+      <Route exact path="/" element={user? <Home user={user}/> : <Register/>}/>
+      <Route exact path="/upload" element={user? <Upload user={user}/> : <Register/>}/>
+      <Route exact path="/register" element={<Register/>}/>
+      <Route exact path="/login" element={<Login/>}/>
       </Routes>
     </Router>
   );

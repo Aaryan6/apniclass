@@ -1,14 +1,13 @@
 import { Menu } from "@mui/icons-material";
 import {
   AppBar,
-  Button,
   IconButton,
   Toolbar,
   Typography,
   LinearProgress,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import {
@@ -57,17 +56,19 @@ const Submit = styled.button`
   font-size: 18px;
   font-weight: 500;
   color: #fff;
+  cursor: pointer;
 `;
 const Label = styled.span`
   margin: 5px;
 `;
 
-const Upload = () => {
+const Upload = ({user}) => {
   const [subject, setSubject] = useState("");
   const [stype, setStype] = useState("");
   const [file_name, setFile_name] = useState("");
   const [file, setFile] = useState(null);
   const [progressNo, setProgressNo] = useState(0);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,50 +78,41 @@ const Upload = () => {
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    // Register three observers:
-    // 1. 'state_changed' observer, called any time the state changes
-    // 2. Error observer, called on failure
-    // 3. Completion observer, called on successful completion
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        // console.log("Upload is " + progress + "% done");
         setProgressNo(progress);
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
+        // switch (snapshot.state) {
+        //   case "paused":
+        //     console.log("Upload is paused");
+        //     break;
+        //   case "running":
+        //     console.log("Upload is running");
+        //     break;
+        //   default:
+        // }
       },
       (error) => {
-        // Handle unsuccessful uploads
       },
       () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
+          // console.log("File available at", downloadURL);
           postFile(downloadURL);
         });
       }
     );
   };
   const postFile = async (downloadURL) => {
-    await axios.post("https://apniclass.herokuapp.com/api/", {
+    await axios.post("https://apniclass.herokuapp.com/api/files/", {
       subject: subject,
       stype: stype,
       fileName: file_name,
       fileLink: downloadURL,
     });
-    console.log(downloadURL + " hi");
+    navigate("/")
   };
   return (
     <>
@@ -140,7 +132,7 @@ const Upload = () => {
               ApniClass
             </Link>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Typography variant="span" component="div"  color="inherit">{user.username}</Typography>
         </Toolbar>
       </AppBar>
       <Container>

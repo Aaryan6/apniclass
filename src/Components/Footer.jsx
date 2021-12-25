@@ -2,13 +2,16 @@ import styled from "styled-components";
 
 const Container = styled.div`
 width: 100%;
+@media screen and (max-width: 400px) {
+    width: 102%;
+  }
 display: flex;
 flex-direction: column;
 align-items: center;
-position: sticky;
+position: relative;
 bottom: 0;
 left: 0;
-background: #000814;
+background: #001d3d;
 color: #fff;
 padding: 15px 0;
 `
