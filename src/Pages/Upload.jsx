@@ -39,6 +39,11 @@ const Category = styled.input`
   padding: 10px;
   font-size: 17px;
 `;
+const FileUrl = styled.input`
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 17px;
+`;
 const File = styled.input`
   margin: 10px 0;
   padding: 10px;
@@ -65,6 +70,7 @@ const Upload = ({user}) => {
   const [subject, setSubject] = useState("");
   const [stype, setStype] = useState("");
   const [file_name, setFile_name] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   const [file, setFile] = useState(null);
   const [progressNo, setProgressNo] = useState(0);
   const navigate = useNavigate()
@@ -112,6 +118,7 @@ const Upload = ({user}) => {
       stype: stype,
       fileName: file_name,
       fileLink: downloadURL,
+      openUrl: fileUrl,
     });
 
     navigate("/")
@@ -192,6 +199,12 @@ const Upload = ({user}) => {
               <MenuItem value="practical">Practical</MenuItem>
             </Select>
           </FormControl>
+          <Label>File Name</Label>
+          <FileUrl
+            type="text"
+            placeholder="File Name"
+            onChange={(e) => setFileUrl(e.target.value)}
+          />
           <Label>File</Label>
           <File type="file" onChange={(e) => setFile(e.target.files[0])} />
           <Submit onClick={handleSubmit}>Upload</Submit>
