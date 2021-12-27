@@ -53,6 +53,14 @@ const CardBox = ({ file }) => {
         <Typography variant="subtext" component="span" sx={{ flexGrow: 1 }}>
           {file.fileName}
         </Typography>
+        {file.openUrl &&
+        <a
+          href={file.openUrl}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Button>Open</Button>
+        </a>
+}
         <a
           href={file.fileLink}
           style={{ textDecoration: "none", color: "inherit" }}
