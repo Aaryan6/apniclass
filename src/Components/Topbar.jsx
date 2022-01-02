@@ -36,8 +36,12 @@ const Right = styled.div`
 display: flex;
 align-items: center;
 `;
+const Login = styled.span`
+font-weight: 600;
+font-size: 17px;
+`;
 
-const Topbar = ({user}) => {
+const Topbar = ({user,message}) => {
     const [offset, setOffset] = useState(window.pageYOffset);
   window.onscroll = () => {
     setOffset(window.pageYOffset);
@@ -63,18 +67,27 @@ const Topbar = ({user}) => {
             </Logo>
           </Link>
           <Right>
-          {user.isAdmin && (
+          {user?.isAdmin && (
             <Link to="/upload" style={{ textDecoration: "none",marginRight: "5px" , color: offset >= 300 ? "#000" : "#fff"}}>
               <Upload>UPLOAD</Upload>
             </Link>
           )}
+          {user ? (
+            <>
           <Username style={{color: offset >= 300 ? "#000" : "#fff"}}>
             Hi!{" "}
             <span style={{ color: "#fca311" , fontWeight: "bold" }}>
-              {user.username}
+              {user?.username}
             </span>
           </Username>
           <Logout onClick={handleLogout} style={{cursor: "pointer", color: offset >= 300 ? "#000" : "#fff"}}/>
+          </>
+          )
+          :
+          <Link to="/login" style={{ textDecoration: "none",marginRight: "5px" , color: offset >= 300 ? "#000" : "#fff"}}>
+          <Login>{message}</Login>
+          </Link>
+          }
           </Right>
         </Wrapper>
       </Navbar>

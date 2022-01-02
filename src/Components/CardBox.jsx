@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
+import axios from "axios";
 import styled from "styled-components";
 
 const Card = styled.div`
-  /* max-width: 300px; */
   min-width: 250px;
   margin: 20px auto;
   @media screen and (max-width: 400px) {
@@ -39,13 +39,36 @@ const Button = styled.button`
   margin-top: 10px;
   border-radius: 5px;
 `;
+const ActionsButton = styled.div`
+  display: flex;
+  align-items: center;
+  button {
+    background: #e42807;
+  }
+  a {
+    width: 100%;
+    margin-left: 5px;
+    button {
+      background: #2287ec;
+    }
+  }
+`;
 const CardBox = ({ file }) => {
+  const handleClick = async (fileId) => {
+    try {
+      await axios.delete(`https://apniclass.herokuapp.com/api/files/${fileId}`);
+      console.log("Deleted file");
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Card>
       <a
         href={file.fileLink}
         style={{ textDecoration: "none", color: "inherit" }}
-        
       >
         <Image></Image>
       </a>
@@ -53,20 +76,24 @@ const CardBox = ({ file }) => {
         <Typography variant="subtext" component="span" sx={{ flexGrow: 1 }}>
           {file.fileName}
         </Typography>
-        {file.openUrl &&
-        <a
-          href={file.openUrl}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <Button>Open</Button>
-        </a>
-}
+        {file.openUrl && (
+          <a
+            href={file.openUrl}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Button>Open</Button>
+          </a>
+        )}
         <a
           href={file.fileLink}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <Button>Download</Button>
         </a>
+        <ActionsButton>
+          <Button onClick={() => handleClick(file._id)}>Delete</Button>
+          <Button style={{ marginLeft: "5px" }}>Edit</Button>
+        </ActionsButton>
       </Footer>
     </Card>
   );

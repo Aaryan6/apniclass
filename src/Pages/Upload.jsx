@@ -70,7 +70,7 @@ const Upload = ({user}) => {
   const [subject, setSubject] = useState("");
   const [stype, setStype] = useState("");
   const [file_name, setFile_name] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
+  const [openUrl, setOpenUrl] = useState("");
   const [file, setFile] = useState(null);
   const [progressNo, setProgressNo] = useState(0);
   const navigate = useNavigate()
@@ -118,11 +118,13 @@ const Upload = ({user}) => {
       stype: stype,
       fileName: file_name,
       fileLink: downloadURL,
-      openUrl: fileUrl,
+      openUrl: openUrl,
     });
 
     navigate("/")
   };
+
+  
   return (
     <>
       <AppBar position="static" style={{ background: "#003566" }}>
@@ -199,11 +201,11 @@ const Upload = ({user}) => {
               <MenuItem value="practical">Practical</MenuItem>
             </Select>
           </FormControl>
-          <Label>File Name</Label>
+          <Label>File Url(Drive)</Label>
           <FileUrl
             type="text"
-            placeholder="File Name"
-            onChange={(e) => setFileUrl(e.target.value)}
+            placeholder="File Url"
+            onChange={(e) => setOpenUrl(e.target.value)}
           />
           <Label>File</Label>
           <File type="file" onChange={(e) => setFile(e.target.files[0])} />

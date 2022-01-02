@@ -95,7 +95,7 @@ const Landing = () => {
               marginRight: "20px",
             }}
           >
-            <InputLabel id="demo-simple-select-label">All</InputLabel>
+            <InputLabel id="demo-simple-select-label">Subject</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -118,7 +118,7 @@ const Landing = () => {
               width: "130px",
             }}
           >
-            <InputLabel id="demo-simple-select-label">All</InputLabel>
+            <InputLabel id="demo-simple-select-label">Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
