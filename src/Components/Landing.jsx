@@ -54,7 +54,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Landing = () => {
+const Landing = ({user}) => {
   const [files, setFiles] = useState([]);
   const [subject, setSubject] = useState("");
   const [type, setType] = useState("");
@@ -167,7 +167,7 @@ const Landing = () => {
               }
             })
             .map((file) => (
-              <CardBox file={file} key={file._id} />
+              <CardBox file={file} key={file._id} user={user}/>
             ))}
         </Wrapper>
       </Container>
