@@ -53,7 +53,7 @@ const ActionsButton = styled.div`
     }
   }
 `;
-const CardBox = ({ file }) => {
+const CardBox = ({ file, user }) => {
   const handleClick = async (fileId) => {
     try {
       await axios.delete(`https://apniclass.herokuapp.com/api/files/${fileId}`);
@@ -90,10 +90,12 @@ const CardBox = ({ file }) => {
         >
           <Button>Download</Button>
         </a>
+{user.isAdmin &&
         <ActionsButton>
           <Button onClick={() => handleClick(file._id)}>Delete</Button>
           <Button style={{ marginLeft: "5px" }}>Edit</Button>
         </ActionsButton>
+}
       </Footer>
     </Card>
   );
