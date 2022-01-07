@@ -8,7 +8,7 @@ const Home = ({ user,message }) => {
     <>
       <Topbar user={user} message={message}/>
       <Header />
-      <Landing />
+      <Landing user={user} />
       <Footer />
     </>
   );
