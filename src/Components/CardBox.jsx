@@ -95,7 +95,7 @@ const CardBox = ({ file, user }) => {
           <Button onClick={() => handleClick(file._id)}>Delete</Button>
           <Button style={{ marginLeft: "5px" }}>Edit</Button>
         </ActionsButton>
-}
+ }
       </Footer>
     </Card>
   );
