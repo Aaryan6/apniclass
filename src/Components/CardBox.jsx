@@ -90,7 +90,7 @@ const CardBox = ({ file, user }) => {
         >
           <Button>Download</Button>
         </a>
-{user.isAdmin &&
+{user &&
         <ActionsButton>
           <Button onClick={() => handleClick(file._id)}>Delete</Button>
           <Button style={{ marginLeft: "5px" }}>Edit</Button>
